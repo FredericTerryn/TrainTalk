@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "955867437283",
+    "firebase_url": "https://traintalk-f9645.firebaseio.com",
+    "project_id": "traintalk-f9645",
+    "storage_bucket": "traintalk-f9645.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955867437283:android:9240a7de940bef1d",
+        "android_client_info": {
+          "package_name": "com.personal.frederic.traintalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955867437283-4o04kkj4fa2844n4cldb2bko5ti3diqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHqh6FkepjjkjCpb0F_Ddmu_Y_cAYX7gY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
