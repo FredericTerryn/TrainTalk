@@ -1,9 +1,9 @@
 package com.personal.frederic.TrainTalk
 
-import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.personal.frederic.TrainTalk.utils.afterTextChanged
 import com.personal.frederic.TrainTalk.viewModels.InputViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

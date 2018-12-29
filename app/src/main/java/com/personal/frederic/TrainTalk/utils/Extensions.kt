@@ -1,4 +1,4 @@
-package com.personal.frederic.TrainTalk
+package com.personal.frederic.TrainTalk.utils
 
 
 import android.text.Editable
