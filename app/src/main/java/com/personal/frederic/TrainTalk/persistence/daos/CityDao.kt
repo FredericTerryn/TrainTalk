@@ -21,6 +21,4 @@ interface CityDao  {
     @Delete
     fun delete(city: City)
 
-    @Query("DELETE FROM city_table")
-    fun deleteAll(): List<City>
 }
