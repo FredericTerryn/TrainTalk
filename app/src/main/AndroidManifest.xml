@@ -13,17 +13,17 @@
             >
         <activity
                 android:name=".authorisation.RegisterActivity"
-                android:label="@string/app_name">
+                android:label="Traintalk">
 
         </activity>
         <activity android:name=".authorisation.LoginActivity"
                   android:label="LoginActivity"/>
         <activity android:name=".mainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

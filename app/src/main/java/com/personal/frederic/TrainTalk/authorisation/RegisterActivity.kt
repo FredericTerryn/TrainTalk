@@ -19,9 +19,10 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
-
+    /*
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
+
             R.id.navigation_home -> {
                 return@OnNavigationItemSelectedListener true
             }
@@ -34,12 +35,13 @@ class RegisterActivity : AppCompatActivity() {
         }
         false
     }
+    */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
 
 

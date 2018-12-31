@@ -31,7 +31,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 class Metar(val id: Long,
-            @field:Json(name = "Raw-Report") val rawMetar: String,
+            @field:Json(name = "Raw-Report") val rawMetar: String, //@field property is from moshi
             @field:Json(name = "Station") val airport: String,
             val dayOfMonth: Int,
             val time: Int,
