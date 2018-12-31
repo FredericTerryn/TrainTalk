@@ -11,4 +11,4 @@ interface NmbsApi {
 
     @GET("/api/metar/{icao}")
     fun getMetar(@Path("icao") icao: String): Observable<Metar>
-}g
+}
