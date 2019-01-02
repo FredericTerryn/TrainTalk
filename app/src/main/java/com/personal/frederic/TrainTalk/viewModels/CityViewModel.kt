@@ -7,12 +7,20 @@ import android.arch.lifecycle.ViewModel
 import com.personal.frederic.TrainTalk.persistence.City
 import com.personal.frederic.TrainTalk.persistence.CityDatabase
 import com.personal.frederic.TrainTalk.persistence.repositories.CityRepository
+import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.android.Main
+import kotlin.coroutines.experimental.CoroutineContext
 
 /*
 Separating your app's UI data from your Activity and Fragment classes lets you better follow the
 single responsibility principle: Your activities and fragments are responsible for drawing data to the screen, while your ViewModel can take care of holding and processing all the data needed for the UI.*/
 
-class CityViewModel(application: Application) : AndroidViewModel(application){
+class CityViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var parentJob = Job()
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Main
+    private val scope = CoroutineScope(coroutineContext)
 
     private val repository: CityRepository
 
@@ -28,5 +36,17 @@ class CityViewModel(application: Application) : AndroidViewModel(application){
         allCities = repository.AllCities
     }
 
-   
+
+    fun insert(city: City) = scope.launch(Dispatchers.IO) {
+        repository.insert(city)
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        parentJob.cancel()
+    }
+
+
+
 }
