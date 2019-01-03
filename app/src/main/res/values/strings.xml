@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">MetarTaff</string>
     <string name="title_activity_main">Airports</string>
-    <string name="icaodescription">De ICAO-codes zijn twee- tot vierletterige codes die verwijzen naar navigatiebakens, vliegvelden en weerstations, luchtvaartmaatschappijen of luchtruimen.</string>
+    <string name="icaodescription">De ICAO-codes zijn twee- tot vierletterige codes die verwijzen naar navigatiebakens,
+        vliegvelden en weerstations, luchtvaartmaatschappijen of luchtruimen.
+    </string>
     <string name="airportdescription">Name of the airport</string>
     <string name="add">add</string>
     <string name="cancel">Cancel</string>
@@ -22,9 +24,13 @@
     <string name="wind_speed">Wind speed</string>
     <string name="gusts">Gusts</string>
     <string name="sight">Line of sight</string>
-    <string name="string_navigation_listofairports">List of airports</string>
+    <string name="string_navigation_listofConnections">List of connections</string>
+    <string name="string_navigation_listofCities">List of cities</string>
     <string name="time">Time</string>
     <string name="raw_code">RAW Code</string>
     <string name="loading">Loading...</string>
+    <string name="hint_word">City...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">City not saved because it is empty.</string>
 </resources>
 

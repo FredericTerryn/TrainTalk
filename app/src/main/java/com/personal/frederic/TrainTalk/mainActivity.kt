@@ -8,11 +8,13 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.personal.frederic.TrainTalk.fragments.AirportsFragment
 import com.personal.frederic.TrainTalk.fragments.BaseFragment
+import com.personal.frederic.TrainTalk.fragments.FavouriteCitiesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteractionListener {
 
     // private lateinit var inputViewModel: CityViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +28,22 @@ class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteraction
     override fun onStart() {
         super.onStart()
 
+        navigation.setOnNavigationItemReselectedListener {
+            when(it.itemId){
+                R.id.navigation_item_connectionsList -> {
+                    viewpager_main.currentItem = BaseFragment.Connections
+                }
+                R.id.navigation_item_favourites -> {
+                    viewpager_main.currentItem = BaseFragment.FAVOURITES
+                }
+            }
+        }
+
         viewpager_main.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(p0: Int): Fragment {
                 when(p0){
-                    BaseFragment.AIRPORTS -> return AirportsFragment.newInstance()
-                  //  BaseFragment.RAW -> return RawFragment.newInstance()
+                    BaseFragment.Connections -> return AirportsFragment.newInstance()
+                    BaseFragment.FAVOURITES -> return FavouriteCitiesFragment.newInstance()
                    // BaseFragment.DETAILS -> return DetailsFragment.newInstance()
                    // BaseFragment.OLD -> return OldmetarsFragment.newInstance()
                 }
@@ -38,7 +51,7 @@ class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteraction
             }
 
             override fun getCount(): Int {
-                return 1
+                return 2
             }
         }
     }

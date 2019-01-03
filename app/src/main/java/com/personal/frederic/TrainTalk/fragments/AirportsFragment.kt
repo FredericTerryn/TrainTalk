@@ -103,7 +103,7 @@ class AirportsFragment : BaseFragment() {
         override fun getItemCount() = airports.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val name: TextView = view.name
+            val name: TextView = view.textView
             var description: TextView = view.textview_rowlayout_description
             var thumbNail: ImageView = view.imageview_rowlayout_thumbnail
         }

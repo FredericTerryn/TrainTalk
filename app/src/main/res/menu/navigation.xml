@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/navigation_item_airportlist"
+            android:id="@+id/navigation_item_connectionsList"
             android:icon="@drawable/rounded_button_big"
-            android:title="@string/string_navigation_listofairports" />
+            android:title="@string/string_navigation_listofConnections" />
+    <item
+            android:id="@+id/navigation_item_favourites"
+            android:icon="@drawable/rounded_button_big"
+            android:title="@string/string_navigation_listofCities" />
     <item
             android:id="@+id/navigation_item_raw"
             android:icon="@drawable/ic_home_black_24dp"

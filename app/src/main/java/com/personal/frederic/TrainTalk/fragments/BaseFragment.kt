@@ -16,9 +16,10 @@ open class BaseFragment : Fragment() {
     open var TAG : String = ""
 
     companion object {
-        val AIRPORTS = 0
-        val RAW = 1
-        val DETAILS = 2
-        val OLD = 3
+        val Connections = 0
+        val FAVOURITES = 1
+        val RAW = 2
+        val DETAILS = 3
+        val OLD = 4
     }
 }

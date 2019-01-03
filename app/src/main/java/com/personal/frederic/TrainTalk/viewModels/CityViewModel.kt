@@ -4,11 +4,14 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.personal.frederic.TrainTalk.persistence.City
 import com.personal.frederic.TrainTalk.persistence.CityDatabase
 import com.personal.frederic.TrainTalk.persistence.repositories.CityRepository
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.Main
+import java.util.logging.Logger
+import javax.inject.Inject
 import kotlin.coroutines.experimental.CoroutineContext
 
 /*
@@ -22,8 +25,8 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    private val repository: CityRepository
 
+    private val repository: CityRepository
     //Add a private LiveData member variable to cache the list of cities.
     //DUS HIER ZITTEN AL JE STEDEN OM TE GEBRUIKEN
     val allCities: LiveData<List<City>>
@@ -31,9 +34,10 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
 
     //Create an init block that gets a reference to the WordDao from the WordRoomDatabase and constructs the WordRepository based on it.
     init {
-        val cityDao = CityDatabase.getDatabase(application).cityDao()
+        val cityDao = CityDatabase.getDatabase(application, scope).cityDao()
         repository = CityRepository(cityDao)
         allCities = repository.AllCities
+        println("The cities are $allCities")
     }
 
 
@@ -47,6 +51,18 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
         parentJob.cancel()
     }
 
-
-
 }
+
+/*
+class App: Application(){
+    companion object {
+        lateinit var component: DatabaseComponent
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        component = DaggerDatabaseComponent.builder().databaseModule(DatabaseModule(this)).build()
+    }
+}
+
+*/
