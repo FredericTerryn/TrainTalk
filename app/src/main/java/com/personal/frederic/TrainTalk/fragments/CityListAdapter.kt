@@ -29,6 +29,7 @@ class CityListAdapter(private val cities: List<City>):
 
 
 
+
     inner class CityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cityItemView: TextView = itemView.findViewById(R.id.textView)
     }

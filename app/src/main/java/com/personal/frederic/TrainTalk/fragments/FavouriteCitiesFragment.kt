@@ -1,5 +1,6 @@
 package com.personal.frederic.TrainTalk.fragments
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -16,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.personal.frederic.TrainTalk.R
 import com.personal.frederic.TrainTalk.persistence.City
 import com.personal.frederic.TrainTalk.viewModels.CityViewModel
@@ -53,13 +55,27 @@ class FavouriteCitiesFragment : BaseFragment() {
                 val adapter = CityListAdapter(cities!!)
                 view!!.recyclerviewFavourites.layoutManager = LinearLayoutManager(context)
                 view!!.recyclerviewFavourites.adapter = adapter
-
         })
-
 
         val fab = view?.findViewById<FloatingActionButton>(R.id.fab2)
         fab?.setOnClickListener {
-            // val intent = Intent(this@FavouriteCitiesFragment, NewFavouriteCityFragment::class.java)
+            val intent = Intent(context, NewFavouriteCityFragment::class.java)
+            startActivityForResult(intent, newFavouriteCityFragmentRequestCode)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == newFavouriteCityFragmentRequestCode && resultCode == Activity.RESULT_OK){
+            data?.let {
+                val city = City(it.getStringExtra(NewFavouriteCityFragment.EXTRA_REPLY))
+                cityViewModel.insert(city)
+            }
+        } else {
+            Toast.makeText(
+                context, "could not insert", Toast.LENGTH_LONG).show()
+
         }
     }
 
@@ -89,6 +105,8 @@ class FavouriteCitiesFragment : BaseFragment() {
     }
 
     companion object {
+        const val newFavouriteCityFragmentRequestCode = 1
+
         @JvmStatic
         fun newInstance() = FavouriteCitiesFragment()
     }
