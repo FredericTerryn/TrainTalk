@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class NmbsViewModel: BaseViewModel() {
 
-    private val rawNmbs = MutableLiveData<String>()
+    val rawNmbs = MutableLiveData<Metar>()
 
     @Inject
     lateinit var nmbsapi: NmbsApi
@@ -22,6 +22,7 @@ class NmbsViewModel: BaseViewModel() {
     private var subscription: Disposable
 
     init {
+        println("init method viewModel")
         subscription = nmbsapi.getMetar("EBOS")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -36,6 +37,6 @@ class NmbsViewModel: BaseViewModel() {
     }
 
     fun onRetrieveMetarSucces(result: Metar){
-        rawNmbs.value = result.rawMetar
+        rawNmbs.value = result
     }
 }

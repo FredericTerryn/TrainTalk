@@ -18,7 +18,7 @@ open class BaseFragment : Fragment() {
     companion object {
         val Connections = 0
         val FAVOURITES = 1
-        val RAW = 2
+        val INFO = 2
         val DETAILS = 3
         val OLD = 4
     }

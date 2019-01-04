@@ -12,13 +12,13 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="string_navigation_raw">Raw data</string>
-    <string name="string_navigation_explanation">Explanation</string>
+    <string name="string_navigation_info">Info</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string_navigation_oldmetars">Older Metars</string>
     <string name="rewmetar">Raw Metar</string>
-    <string name="aiport">Airport</string>
+    <string name="City">City</string>
     <string name="day_of_month">Day of month</string>
     <string name="wind_direction">Wind direction</string>
     <string name="wind_speed">Wind speed</string>

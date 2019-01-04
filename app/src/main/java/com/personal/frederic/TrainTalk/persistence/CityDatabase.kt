@@ -57,7 +57,7 @@ abstract class CityDatabase: RoomDatabase() {
                 // Log.d("CityDao", "populatedatabase is called")
                 cityDao.deleteAll()
 
-                var city = City("Hello")
+                var city = City("Change the  ")
                 cityDao.insert(city)
                 city = City("World!")
                 cityDao.insert(city)

@@ -9,6 +9,7 @@ import com.orhanobut.logger.Logger
 import com.personal.frederic.TrainTalk.fragments.AirportsFragment
 import com.personal.frederic.TrainTalk.fragments.BaseFragment
 import com.personal.frederic.TrainTalk.fragments.FavouriteCitiesFragment
+import com.personal.frederic.TrainTalk.fragments.InfoFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteractionListener {
@@ -36,6 +37,11 @@ class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteraction
                 R.id.navigation_item_favourites -> {
                     viewpager_main.currentItem = BaseFragment.FAVOURITES
                 }
+
+                R.id.navigation_item_info -> {
+                    viewpager_main.currentItem = BaseFragment.INFO
+                }
+
             }
         }
 
@@ -44,14 +50,14 @@ class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteraction
                 when(p0){
                     BaseFragment.Connections -> return AirportsFragment.newInstance()
                     BaseFragment.FAVOURITES -> return FavouriteCitiesFragment.newInstance()
-                   // BaseFragment.DETAILS -> return DetailsFragment.newInstance()
+                    BaseFragment.INFO -> return InfoFragment.newInstance()
                    // BaseFragment.OLD -> return OldmetarsFragment.newInstance()
                 }
                 return AirportsFragment()
             }
 
             override fun getCount(): Int {
-                return 2
+                return 3
             }
         }
     }

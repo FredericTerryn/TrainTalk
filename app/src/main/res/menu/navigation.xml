@@ -15,9 +15,9 @@
             android:title="@string/string_navigation_raw" />
 
     <item
-            android:id="@+id/navigation_item_details"
+            android:id="@+id/navigation_item_info"
             android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/string_navigation_explanation" />
+            android:title="@string/string_navigation_info" />
     <item
             android:id="@+id/navigation_item_oldmetars"
             android:icon="@drawable/ic_dashboard_black_24dp"
