@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/fragment_favourite_cities">
-    <!-- What is thisss linear? -->
+
     <Button
             android:text="Button"
             android:layout_width="wrap_content"

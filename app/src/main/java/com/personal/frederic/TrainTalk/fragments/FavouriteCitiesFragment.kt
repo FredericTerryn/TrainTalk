@@ -57,11 +57,13 @@ class FavouriteCitiesFragment : BaseFragment() {
                 view!!.recyclerviewFavourites.adapter = adapter
         })
 
+        /*
         val fab = view?.findViewById<FloatingActionButton>(R.id.fab2)
         fab?.setOnClickListener {
             val intent = Intent(context, NewFavouriteCityFragment::class.java)
             startActivityForResult(intent, newFavouriteCityFragmentRequestCode)
         }
+        */
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

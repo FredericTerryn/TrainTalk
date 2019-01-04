@@ -1,24 +1,24 @@
 package com.personal.frederic.TrainTalk.fragments
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.personal.frederic.TrainTalk.R
-import com.personal.frederic.TrainTalk.model.Metar
+import com.personal.frederic.TrainTalk.model.StationInfo
+import com.personal.frederic.TrainTalk.persistence.Station
 import com.personal.frederic.TrainTalk.viewModels.NmbsViewModel
 import kotlinx.android.synthetic.main.fragment_info.*
+import kotlinx.android.synthetic.main.fragment_info.view.*
 
 
 class InfoFragment : BaseFragment() {
-    private lateinit var viewModel: NmbsViewModel
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var nmbsViewModel: NmbsViewModel
 
@@ -31,21 +31,22 @@ class InfoFragment : BaseFragment() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         nmbsViewModel = ViewModelProviders.of(this).get(NmbsViewModel::class.java)
     }
-
 
     override fun onResume() {
         super.onResume()
         showData()
     }
 
-    private fun showData(){
-        nmbsViewModel.rawNmbs.observe(this, Observer<Metar> { city ->
-            textview_fragmentinfo_city.text = city?.windDirection.toString()
+    private fun showData() {
+        nmbsViewModel.rawNmbs.observe(this, Observer<StationInfo> { station ->
+            println("dit zijn de stations" + station)
+            val adapter = StationInfoAdapter(station!!.departures.singleDeparture)
+            view!!.recyclerviewStationInfo.layoutManager = LinearLayoutManager(context)
+            view!!.recyclerviewStationInfo.adapter = adapter
         })
     }
 

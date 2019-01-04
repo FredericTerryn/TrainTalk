@@ -1,9 +1,8 @@
 package com.personal.frederic.TrainTalk.viewModels
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
-import com.personal.frederic.TrainTalk.model.Metar
+import com.personal.frederic.TrainTalk.model.StationInfo
 import com.personal.frederic.TrainTalk.network.NmbsApi
 import com.personal.frederic.TrainTalk.viewModels.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 class NmbsViewModel: BaseViewModel() {
 
-    val rawNmbs = MutableLiveData<Metar>()
+    val rawNmbs = MutableLiveData<StationInfo>()
 
     @Inject
     lateinit var nmbsapi: NmbsApi
@@ -23,7 +22,7 @@ class NmbsViewModel: BaseViewModel() {
 
     init {
         println("init method viewModel")
-        subscription = nmbsapi.getMetar("EBOS")
+        subscription = nmbsapi.getInfo("Roeselare", "json")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -36,7 +35,8 @@ class NmbsViewModel: BaseViewModel() {
         Logger.e(error.message!!)
     }
 
-    fun onRetrieveMetarSucces(result: Metar){
+    fun onRetrieveMetarSucces(result: StationInfo){
+        println(result)
         rawNmbs.value = result
     }
 }

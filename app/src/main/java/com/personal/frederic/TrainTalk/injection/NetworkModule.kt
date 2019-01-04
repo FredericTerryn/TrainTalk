@@ -24,7 +24,7 @@ object NetworkModule {
 
 
     /**
-     * Provides the Metar Service implemenation
+     * Provides the StationInfo Service implemenation
      * @param retrofit the retrofit object used to instantiate the service
      */
     @Provides
