@@ -19,12 +19,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.personal.frederic.TrainTalk.R
+import com.personal.frederic.TrainTalk.mainActivity
 import com.personal.frederic.TrainTalk.persistence.City
 import com.personal.frederic.TrainTalk.viewModels.CityViewModel
+import kotlinx.android.synthetic.main.fragment_favourite_cities.*
 import kotlinx.android.synthetic.main.fragment_favourite_cities.view.*
 
 
-class FavouriteCitiesFragment : BaseFragment() {
+class FavouriteCitiesFragment : BaseFragment(), View.OnClickListener {
 
     private var cities: List<City>? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -37,6 +39,7 @@ class FavouriteCitiesFragment : BaseFragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favourite_cities, container, false)
+        fab2.setOnClickListener{this}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,21 +52,24 @@ class FavouriteCitiesFragment : BaseFragment() {
         showData()
     }
 
+    fun onEvent(data: Int){
+        //Todo
+    }
+
     private fun showData(){
         cityViewModel.allCities.observe(this, Observer { cities ->
 
-                val adapter = CityListAdapter(cities!!)
+                val adapter = CityListAdapter(cities!!) {
+                    val fragment = InfoFragment()
+                    val bundle = Bundle()
+                    bundle.putString("city", it)
+                    (activity as mainActivity).changeFragment(fragment, "info", true, bundle)
+                }
                 view!!.recyclerviewFavourites.layoutManager = LinearLayoutManager(context)
                 view!!.recyclerviewFavourites.adapter = adapter
         })
 
-        /*
-        val fab = view?.findViewById<FloatingActionButton>(R.id.fab2)
-        fab?.setOnClickListener {
-            val intent = Intent(context, NewFavouriteCityFragment::class.java)
-            startActivityForResult(intent, newFavouriteCityFragmentRequestCode)
-        }
-        */
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,9 +87,6 @@ class FavouriteCitiesFragment : BaseFragment() {
         }
     }
 
-
-
-
     /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -96,6 +99,16 @@ class FavouriteCitiesFragment : BaseFragment() {
     }
     */
 
+    override fun onClick(v: View?) {
+        Log.d("favourite cities", "clicked on add button ")
+    }
+    /*
+        fab?.setOnClickListener {
+            val intent = Intent(context, NewFavouriteCityFragment::class.java)
+            startActivityForResult(intent, newFavouriteCityFragmentRequestCode)
+    }
+    */
+
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -104,6 +117,7 @@ class FavouriteCitiesFragment : BaseFragment() {
 
     interface OnFragmentInteractionListener {
         fun ShowCities()
+
     }
 
     companion object {

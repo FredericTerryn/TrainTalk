@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.personal.frederic.TrainTalk.R
+import com.personal.frederic.TrainTalk.mainActivity
 import com.personal.frederic.TrainTalk.model.StationInfo
 import com.personal.frederic.TrainTalk.persistence.Station
 import com.personal.frederic.TrainTalk.viewModels.NmbsViewModel
@@ -42,12 +43,15 @@ class InfoFragment : BaseFragment() {
     }
 
     private fun showData() {
+        (activity as mainActivity).getIdlingResourceInTest().increment() //voor da je data ophaalt zodat test daar nie op wacht
         nmbsViewModel.rawNmbs.observe(this, Observer<StationInfo> { station ->
             println("dit zijn de stations" + station)
             val adapter = StationInfoAdapter(station!!.departures.singleDeparture)
             view!!.recyclerviewStationInfo.layoutManager = LinearLayoutManager(context)
             view!!.recyclerviewStationInfo.adapter = adapter
         })
+
+        (activity as mainActivity).getIdlingResourceInTest().decrement()
     }
 
     // TODO: Rename method, update argument and hook method into UI event

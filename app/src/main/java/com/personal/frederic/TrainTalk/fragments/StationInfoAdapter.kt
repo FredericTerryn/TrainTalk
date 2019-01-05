@@ -27,10 +27,11 @@ class StationInfoAdapter(private val stations: MutableList<Departure>):
     override fun onBindViewHolder(holder: StationInfoViewHolder, position: Int) {
         val current = stations[position]
         holder.stationInfoView.text = current.bestemming
+        holder.stationInfoDelay.text = current.delay
     }
 
     inner class StationInfoViewHolder(view: View): RecyclerView.ViewHolder(view){
         val stationInfoView: TextView = itemView.findViewById(R.id.stationInfoItem_textView)
-
+        val stationInfoDelay: TextView = itemView.findViewById(R.id.stationInfoItem_textView_delay)
     }
 }

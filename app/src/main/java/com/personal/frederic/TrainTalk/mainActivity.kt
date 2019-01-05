@@ -1,26 +1,64 @@
 package com.personal.frederic.TrainTalk
 
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
+import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AppCompatActivity
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.personal.frederic.TrainTalk.fragments.AirportsFragment
-import com.personal.frederic.TrainTalk.fragments.BaseFragment
-import com.personal.frederic.TrainTalk.fragments.FavouriteCitiesFragment
-import com.personal.frederic.TrainTalk.fragments.InfoFragment
+import com.personal.frederic.TrainTalk.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteractionListener {
+class mainActivity : AppCompatActivity() {
 
     // private lateinit var inputViewModel: CityViewModel
+    private val idlingResource = CountingIdlingResource("MAIN_LOADER")
+    private val bundle = Bundle()
 
+    fun getIdlingResourceInTest(): CountingIdlingResource{
+        return idlingResource
+    }
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_item_connectionsList -> {
+                changeFragment(AirportsFragment(), "home", true, bundle)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_item_favourites -> {
+                changeFragment(FavouriteCitiesFragment(), "favourites", true, bundle)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_item_info -> {
+                changeFragment(InfoFragment(), "info", true, bundle)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
+    fun changeFragment(fragment: Fragment, tag: String, addToStack: Boolean, bundle: Bundle) {
+        val fragmentManager = supportFragmentManager
+        fragment.arguments = bundle
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        if (addToStack) {
+            fragmentTransaction.addToBackStack(tag)
+        }
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+        fragmentTransaction.commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Logger.addLogAdapter(AndroidLogAdapter())
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+       // Logger.addLogAdapter(AndroidLogAdapter())
+
+        changeFragment(AirportsFragment(), "home", true, bundle)
 
       //  inputViewModel = ViewModelProviders.of(this).get(CityViewModel::class.java)
 
@@ -28,45 +66,88 @@ class mainActivity : AppCompatActivity(), AirportsFragment.OnFragmentInteraction
 
     override fun onStart() {
         super.onStart()
+        if (supportFragmentManager.backStackEntryCount != 1) {
+            when (supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 2).name) {
+                "home" -> changeFragment(AirportsFragment(), "home", true, bundle)
+                "favourites" -> changeFragment(FavouriteCitiesFragment(), "favourites", true, bundle)
+                "info" -> changeFragment(InfoFragment(), "info", true, bundle)
+            }
+        }
+    }
+       // navigation.setOnNavigationItemSelectedListener(
 
-        navigation.setOnNavigationItemReselectedListener {
-            when(it.itemId){
+
+        /*
+        navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
                 R.id.navigation_item_connectionsList -> {
                     viewpager_main.currentItem = BaseFragment.Connections
+                    true
                 }
                 R.id.navigation_item_favourites -> {
                     viewpager_main.currentItem = BaseFragment.FAVOURITES
+                    true
                 }
-
                 R.id.navigation_item_info -> {
                     viewpager_main.currentItem = BaseFragment.INFO
+                    true
                 }
-
+                R.id.navigation_item_add ->{
+                    viewpager_main.currentItem = BaseFragment.ADD
+                    true
+                }
+                else -> {
+                    viewpager_main.currentItem = BaseFragment.FAVOURITES
+                    true
+                }
             }
         }
 
-        viewpager_main.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        viewpager_main.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
             override fun getItem(p0: Int): Fragment {
                 when(p0){
                     BaseFragment.Connections -> return AirportsFragment.newInstance()
                     BaseFragment.FAVOURITES -> return FavouriteCitiesFragment.newInstance()
                     BaseFragment.INFO -> return InfoFragment.newInstance()
-                   // BaseFragment.OLD -> return OldmetarsFragment.newInstance()
+                    BaseFragment.ADD -> return NewFavouriteCityFragment.newInstance()
                 }
-                return AirportsFragment()
+                return InfoFragment()
             }
 
             override fun getCount(): Int {
-                return 3
+                return 4
             }
         }
-    }
-
-    override fun showAirportMetar() {
-        Logger.i("Showing the METAR")
-    }
-
+        */
 }
+
+    /*
+    override fun showAirportMetar() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun changeFragment(fragment: Fragment, tag: String, addToStack: Boolean, bundle: Bundle){
+        viewpager_main.currentItem = BaseFragment.INFO
+        viewpager_main.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+            override fun getItem(p0: Int): Fragment {
+                when(p0){
+                    BaseFragment.INFO -> return InfoFragment.newInstance()
+                }
+                return InfoFragment()
+            }
+            override fun getCount(): Int {
+                return 4
+            }
+        }
+
+        /*val fragmentManager = supportFragmentManager
+        fragment.arguments = bundle
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.viewpager_main, fragment)
+        fragmentTransaction.commit()*/
+    }
+    */
+
 
 
 

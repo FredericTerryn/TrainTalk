@@ -10,16 +10,8 @@
             android:icon="@drawable/rounded_button_big"
             android:title="@string/string_navigation_listofCities" />
     <item
-            android:id="@+id/navigation_item_raw"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/string_navigation_raw" />
-
-    <item
             android:id="@+id/navigation_item_info"
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/string_navigation_info" />
-    <item
-            android:id="@+id/navigation_item_oldmetars"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/string_navigation_oldmetars" />
+  
 </menu>

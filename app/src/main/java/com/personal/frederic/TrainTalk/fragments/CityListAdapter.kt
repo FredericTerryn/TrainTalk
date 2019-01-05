@@ -7,15 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.personal.frederic.TrainTalk.R
+import com.personal.frederic.TrainTalk.mainActivity
 import com.personal.frederic.TrainTalk.persistence.City
+import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import java.util.*
 
 
-class CityListAdapter(private val cities: List<City>):
+class CityListAdapter(private val cities: List<City>, val listener: (String) -> Unit):
     RecyclerView.Adapter<CityListAdapter.CityViewHolder>() {
 
 
     override fun getItemCount() = cities.size
 
+
+    interface EventListener{
+        fun onEvent(data: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
@@ -25,7 +32,12 @@ class CityListAdapter(private val cities: List<City>):
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
         val current = cities[position]
         holder.cityItemView.text = current.city
+
+        holder.cityItemView.setOnClickListener {
+            listener(holder?.cityItemView.text.toString())
+        }
     }
+
 
 
 

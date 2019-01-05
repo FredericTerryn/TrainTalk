@@ -52,7 +52,7 @@ class AirportsFragment : BaseFragment() {
         return airportList
     }
 
-
+    /*
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         TAG = "AirportsFragment"
@@ -63,6 +63,7 @@ class AirportsFragment : BaseFragment() {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
+    */
 
     override fun onDetach() {
         super.onDetach()
