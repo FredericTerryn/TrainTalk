@@ -6,7 +6,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".authorisation.RegisterActivity" android:background="@android:color/holo_green_light">
+         android:background="@android:color/holo_green_light">
 
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
