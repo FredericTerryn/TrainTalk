@@ -1,5 +1,6 @@
 package com.personal.frederic.TrainTalk.fragments
 
+import android.provider.ContactsContract
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ class CityListAdapter(private val cities: List<City>, val listener: (String) -> 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
         val current = cities[position]
         holder.cityItemView.text = current.city
+        holder.roundtrain.setImageResource(R.drawable.trainround)
         holder.cityItemView.setOnClickListener {
             listener(holder?.cityItemView.text.toString())
 
@@ -43,5 +45,6 @@ class CityListAdapter(private val cities: List<City>, val listener: (String) -> 
 
     inner class CityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cityItemView: TextView = itemView.findViewById(R.id.textView)
+        val roundtrain: ImageView = itemView.findViewById(R.id.idTrainImage)
     }
 }
