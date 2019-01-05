@@ -13,5 +13,5 @@
             android:id="@+id/navigation_item_info"
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/string_navigation_info" />
-  
+
 </menu>

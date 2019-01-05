@@ -32,14 +32,11 @@ class CityListAdapter(private val cities: List<City>, val listener: (String) -> 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
         val current = cities[position]
         holder.cityItemView.text = current.city
-
         holder.cityItemView.setOnClickListener {
             listener(holder?.cityItemView.text.toString())
+
         }
     }
-
-
-
 
 
     inner class CityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
