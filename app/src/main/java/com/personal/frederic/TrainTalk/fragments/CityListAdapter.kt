@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.personal.frederic.TrainTalk.R
 import com.personal.frederic.TrainTalk.mainActivity
 import com.personal.frederic.TrainTalk.persistence.City
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import kotlinx.android.synthetic.main.recyclerview_stationinfo_item.view.*
 import java.util.*
 
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import android.widget.ImageView
 import android.widget.TextView
 import com.personal.frederic.TrainTalk.R
 import com.personal.frederic.TrainTalk.model.Departure
@@ -26,12 +27,14 @@ class StationInfoAdapter(private val stations: MutableList<Departure>):
 
     override fun onBindViewHolder(holder: StationInfoViewHolder, position: Int) {
         val current = stations[position]
-        holder.stationInfoView.text = current.bestemming
-        holder.stationInfoDelay.text = current.delay
+        holder.stationInfoView.text = ("BESTEMMING:" + current.bestemming)
+        holder.stationInfoDelay.text = ("Vertraging (min): " +current.delay)
+        holder.thumbnail.setImageResource(R.drawable.station)
     }
 
     inner class StationInfoViewHolder(view: View): RecyclerView.ViewHolder(view){
         val stationInfoView: TextView = itemView.findViewById(R.id.stationInfoItem_textView)
         val stationInfoDelay: TextView = itemView.findViewById(R.id.stationInfoItem_textView_delay)
+        val thumbnail: ImageView = itemView.findViewById(R.id.imageview_infoitem_thumbnail)
     }
 }
