@@ -6,6 +6,10 @@ import com.personal.frederic.TrainTalk.injection.component.DaggerViewModelInject
 import com.personal.frederic.TrainTalk.injection.component.ViewModelInjectorComponent
 import com.personal.frederic.TrainTalk.viewModels.NmbsViewModel
 
+/**
+ * Baseviewmodel: Injects all the correct dependencies for the viewmodels.
+ */
+
 abstract class BaseViewModel : ViewModel() {
     private val injectorComponent: ViewModelInjectorComponent = DaggerViewModelInjectorComponent
         .builder()

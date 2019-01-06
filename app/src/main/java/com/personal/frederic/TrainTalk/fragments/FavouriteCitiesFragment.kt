@@ -44,7 +44,7 @@ class FavouriteCitiesFragment : BaseFragment(), View.OnClickListener {
     }
 
     /**
-     * Observes the data in the viewmodel. (A list of cities.) Then instanciates the adapter, with the list.
+     * Observes the data in the viewmodel (this data comes from the repository, is a liveData-list). (A list of cities.) Then instanciates the adapter, with the list.
      * #2 Accepts info from the listener in the adapter (line 58-60 and gives it through, to the method in MainActivity, which changes the fragment.
      * With this info, the right city can be become from the api. (city is placed in bundle)
      */

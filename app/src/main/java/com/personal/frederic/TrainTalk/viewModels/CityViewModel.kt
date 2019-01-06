@@ -14,10 +14,9 @@ import java.util.logging.Logger
 import javax.inject.Inject
 import kotlin.coroutines.experimental.CoroutineContext
 
-/*
-Separating your app's UI data from your Activity and Fragment classes lets you better follow the
-single responsibility principle: Your activities and fragments are responsible for drawing data to the screen, while your ViewModel can take care of holding and processing all the data needed for the UI.*/
-
+/**
+ * ViewModel which gets the data from the Room database and has this info available for the fragments.
+ */
 class CityViewModel(application: Application) : AndroidViewModel(application) {
 
     private var parentJob = Job()
@@ -26,9 +25,8 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
     private val scope = CoroutineScope(coroutineContext)
 
 
+
     private val repository: CityRepository
-    //Add a private LiveData member variable to cache the list of cities.
-    //DUS HIER ZITTEN AL JE STEDEN OM TE GEBRUIKEN
     val allCities: LiveData<List<City>>
 
 
@@ -53,16 +51,3 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
 
 }
 
-/*
-class App: Application(){
-    companion object {
-        lateinit var component: DatabaseComponent
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        component = DaggerDatabaseComponent.builder().databaseModule(DatabaseModule(this)).build()
-    }
-}
-
-*/

@@ -5,13 +5,20 @@ import android.support.annotation.WorkerThread
 import com.personal.frederic.TrainTalk.persistence.City
 import com.personal.frederic.TrainTalk.persistence.daos.CityDao
 
+/**
+ * The repository is used according to the design patterns, so the viewmodel-layer has no direct contact with the persistence layer.
+ *
+ * Stores the cities, which it got from the database through the daos, in a Livedatalist, which can then be asked for in the viewmodels.
+ */
 class CityRepository(private val cityDao: CityDao)  {
 
-    /*Add the list of words as a public property and initialize it. Room executes all queries on a separate thread. Observed LiveData will notify the observer when the data has changed.*/
+
     val AllCities: LiveData<List<City>> = cityDao.getAllCities()
 
-    /*
-    Add a wrapper for the insert() method. You must call this on a non-UI thread or your app will crash. Room ensures that you don't do any long-running operations on the main thread, blocking the UI. Add the @WorkerThread annotation, to mark that this method needs to be called from a non-UI thread. Add the suspend modifier to tell the compiler that this needs to be called from a coroutine or another suspending function.
+    /**
+    * Adds a wrapper for the insert() method. You must call this on a non-UI thread or the app will crash.
+     * Room ensures that you don't do any long-running operations on the main thread, blocking the UI.
+     * The @WorkerThread annotation, to mark that this method needs to be called from a non-UI thread.
     */
     @WorkerThread
         suspend fun insert(city:City){
