@@ -12,11 +12,18 @@
         android:layout_height="match_parent"
       >
 
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            />
 
     <FrameLayout
             android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

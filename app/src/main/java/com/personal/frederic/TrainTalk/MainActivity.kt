@@ -4,16 +4,11 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AppCompatActivity
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import com.personal.frederic.TrainTalk.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
-class mainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     // private lateinit var inputViewModel: CityViewModel
     private val idlingResource = CountingIdlingResource("MAIN_LOADER")
@@ -26,7 +21,7 @@ class mainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_item_connectionsList -> {
-                changeFragment(AirportsFragment(), "home", true, bundle)
+                changeFragment(HomeFragment(), "home", true, bundle)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_item_favourites -> {
@@ -55,10 +50,11 @@ class mainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.my_toolbar_main))
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
        // Logger.addLogAdapter(AndroidLogAdapter())
 
-        changeFragment(AirportsFragment(), "home", true, bundle)
+        changeFragment(HomeFragment(), "home", true, bundle)
 
       //  inputViewModel = ViewModelProviders.of(this).get(CityViewModel::class.java)
 
@@ -68,7 +64,7 @@ class mainActivity : AppCompatActivity() {
         super.onStart()
         if (supportFragmentManager.backStackEntryCount != 1) {
             when (supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 2).name) {
-                "home" -> changeFragment(AirportsFragment(), "home", true, bundle)
+                "home" -> changeFragment(HomeFragment(), "home", true, bundle)
                 "favourites" -> changeFragment(FavouriteCitiesFragment(), "favourites", true, bundle)
                 "info" -> changeFragment(InfoFragment(), "info", true, bundle)
             }
@@ -106,7 +102,7 @@ class mainActivity : AppCompatActivity() {
         viewpager_main.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
             override fun getItem(p0: Int): Fragment {
                 when(p0){
-                    BaseFragment.Connections -> return AirportsFragment.newInstance()
+                    BaseFragment.Connections -> return HomeFragment.newInstance()
                     BaseFragment.FAVOURITES -> return FavouriteCitiesFragment.newInstance()
                     BaseFragment.INFO -> return InfoFragment.newInstance()
                     BaseFragment.ADD -> return NewFavouriteCityFragment.newInstance()

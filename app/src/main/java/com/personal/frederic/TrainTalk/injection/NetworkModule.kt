@@ -14,10 +14,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 /**
  * Module which provides all required dependencies for the network.
  *
- * Object: Singleton Instance see [The Kotlin reference](https://kotlinlang.org/docs/reference/object-declarations.html)
- * Retrofit: Library used for REST connections. See [The Retrofit reference](https://square.github.io/retrofit/)
- * What is Dependency Injection? See this [video](https://www.youtube.com/watch?v=IKD2-MAkXyQ)
- * Methods annotated with @Provides  informs Dagger that this method is the constructor
  */
 @Module
 object NetworkModule {
@@ -25,7 +21,7 @@ object NetworkModule {
 
     /**
      * Provides the StationInfo Service implemenation
-     * @param retrofit the retrofit object used to instantiate the service
+     * Builds the base url + the requested city for the right api.
      */
     @Provides
     internal fun provideNmbsApi(retrofit: Retrofit): NmbsApi {
@@ -47,7 +43,6 @@ object NetworkModule {
         val client: OkHttpClient = OkHttpClient.Builder().apply {
             this.addInterceptor(interceptor)
         }.build()
-
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

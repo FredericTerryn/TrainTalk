@@ -2,11 +2,9 @@ package com.personal.frederic.TrainTalk.authorisation
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
@@ -14,36 +12,26 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.personal.frederic.TrainTalk.R
-import com.personal.frederic.TrainTalk.mainActivity
+import com.personal.frederic.TrainTalk.MainActivity
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
+/**
+ * Activity where a new user can register.
+ */
 class RegisterActivity : AppCompatActivity() {
 
-    /*
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
+    /**
+     * Uri for profile picture. See OnActivityResult
+     */
+    var selectedPhotoUri: Uri? = null
 
-            R.id.navigation_home -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-    */
-
+    /**
+     * On creation of this activity, user can do 3 actions, listeners to this actions are instanciated here
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
-        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
 
 
         register_button_register.setOnClickListener {
@@ -51,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         already_have_an_account_text_view.setOnClickListener {
-            val intent= Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -59,32 +47,43 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
 
-            //start activity for getting image from device, it will send a result, which is captured in onActivityResult (see #1)
             startActivityForResult(intent, 0)
             Log.d("RegisterActivity", "Photo selector")
         }
     }
-    var selectedPhotoUri: Uri? = null
 
-    //Here you capture the result #1
+
+    /**
+     * Handles the result when a photo is picked.
+     *
+     * Reads the data-element that contains the uri of the picture. ImageView Takes it as a Bitmap.
+     * Button opacity is set to zero: you don't see the button, but the picture, and when you click it, you can choose a new picture.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             Log.d("RegisterActivity", "Photo was selected")
 
-         selectedPhotoUri = data.data
-           val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+            selectedPhotoUri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
             selectphoto_imageview_register.setImageBitmap(bitmap)
-            //button doorzichtig maken zodat je foto ziet
-            selectphoto_button_register.alpha= 0f
+            selectphoto_button_register.alpha = 0f
 
         }
     }
 
-    private fun performRegister(){
-        val email= email_edittext_register.text.toString()
+    /**
+     * Firebase registry
+     *
+     * First reads the inserted userinfo.
+     * Control empty fields.
+     * Actual register to Firebase with standard method. With Listeners to do actions according to if registry worked or not.
+     * It :  taskresult witch contains the info
+     */
+    private fun performRegister() {
+        val email = email_edittext_register.text.toString()
         val password = password_edittext_register.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
@@ -95,16 +94,17 @@ class RegisterActivity : AppCompatActivity() {
         Log.d("RegisterActivity", "Email is:  $email")
         Log.d("RegisterActivity", "Password: $password")
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { //it is de task-result, en daar kan je dingen mee doen.
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+
             if (!it.isSuccessful) return@addOnCompleteListener
 
-            //else if succesfull
             Log.d("RegisterActivity", "Succesfullly created user with uid: ${it.result?.user?.uid}")
 
             uploadImageToFirebaseStorage()
 
-            if(it.isSuccessful)  {
-                val intent= Intent(this, mainActivity::class.java)
+            if (it.isSuccessful) {
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
 
@@ -115,16 +115,20 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun uploadImageToFirebaseStorage(){
-        //eerst checken of er wel een photouri is
-        if(selectedPhotoUri == null)return
+    /**
+     * Uploads images.
+     *
+     * Makes a unique id for eacht picture to save in the database.
+     */
+    private fun uploadImageToFirebaseStorage() {
+        if (selectedPhotoUri == null) return
 
         //make a random unique id for the images
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
         ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
-            Log.d("RegisterActivity" , "succesfully uploaded image")
+            Log.d("RegisterActivity", "succesfully uploaded image")
 
             ref.downloadUrl.addOnSuccessListener {
                 Log.d("RegisterActivity", "Succesfully downloaded url")
@@ -136,7 +140,10 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserToFirebaseDatabase(profileImageUrl: String){
+    /**
+     * Saves the user to the firebase Database.
+     */
+    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
@@ -149,5 +156,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 }
 
-//url is de file location die uit it.tostring komt
+/**
+ * Separate class which serves as model for a User.
+ */
 class User(val uid: String, val username: String, val profileImageUrl: String)

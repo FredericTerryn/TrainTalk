@@ -13,7 +13,12 @@ import kotlinx.coroutines.experimental.IO
 import kotlinx.coroutines.experimental.launch
 
 
-
+/**
+ * The main acces point for the app's persisted data.
+ *
+ * The class extends ROOM database.
+ * An instance of the database is created by calling Room's Databasebuilder (line 38).
+ */
 @Database(entities = arrayOf(City::class), version = 1)
 abstract class CityDatabase: RoomDatabase() {
     abstract fun cityDao(): CityDao
@@ -21,6 +26,7 @@ abstract class CityDatabase: RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: CityDatabase? = null
+
 
         fun getDatabase(
             context: Context,
@@ -39,7 +45,10 @@ abstract class CityDatabase: RoomDatabase() {
         }
 
 
-        //to delete all content and repopulate the database whenever the app is started, you create a RoomDatabase.Callback and override onOpen(). Because you cannot do Room database operations on the UI thread, onOpen() launches a coroutine on the IO Dispatcher.
+        /**to delete all content and repopulate the database whenever the app is started,
+         *         you create a RoomDatabase.Callback and override onOpen().
+         *         Because you cannot do Room database operations on the UI thread, onOpen() launches a coroutine on the IO Dispatcher.
+         */
         private class CityDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
@@ -54,10 +63,9 @@ abstract class CityDatabase: RoomDatabase() {
             }
 
             fun populateDatabase(cityDao: CityDao) {
-                // Log.d("CityDao", "populatedatabase is called")
                 cityDao.deleteAll()
 
-                //hardcoded list of Stations
+                //list of most used Stations in Belgium
                 var city = City("Brugge")
                 cityDao.insert(city)
                 city = City("Oostende")

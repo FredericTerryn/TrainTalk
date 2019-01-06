@@ -7,6 +7,11 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.personal.frederic.TrainTalk.persistence.City
 
+/**
+ * Contains all methods used for accessing the database.
+ *
+ * Instead of querying the database directly, you call a method from this class.
+ */
 @Dao
 interface CityDao {
 

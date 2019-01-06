@@ -17,7 +17,7 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 @RunWith(AndroidJUnit4::class)
 class MainTest {
     @get:Rule
-    val actorActivityRule = ActivityTestRule(mainActivity::class.java)
+    val actorActivityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun registerIdlingResource(){

@@ -1,6 +1,6 @@
 package com.personal.frederic.TrainTalk.network
 
-import android.arch.lifecycle.MutableLiveData
+
 import com.personal.frederic.TrainTalk.model.StationInfo
 import io.reactivex.Observable
 import retrofit2.http.GET

@@ -9,13 +9,10 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class])
 interface ViewModelInjectorComponent {
 
-
         /**
-         * Injects the dependencies into the specified MetarViewModel.
-         * @param metarViewModel the [MetarViewModel] in which to inject the dependencies.
+         * Injects the dependencies into the specified NmbsViewmodel.
          */
         fun inject(nmbsViewModel: NmbsViewModel)
-
 
         @Component.Builder
         interface Builder {
