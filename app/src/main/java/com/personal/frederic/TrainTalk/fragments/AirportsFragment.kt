@@ -29,28 +29,7 @@ class AirportsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_airports, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        airports = createAirports()
-        recyclerview.adapter = SimpleItemRecyclerViewAdapter(airports!!)
-        recyclerview.layoutManager = LinearLayoutManager(context)
-    }
 
-    private fun createAirports(): List<Airport> {
-        val airportList = mutableListOf<Airport>()
-        val resources = activity?.applicationContext?.resources
-        resources?.let {
-            val ids = it.getIntArray(R.array.ids)
-            val descriptions = it.getStringArray(R.array.descriptions)
-            val locationIndicators = it.getStringArray(R.array.locationIndicator)
-
-            for (i in 0 until ids.size) {
-                val airport = Airport(ids[i], locationIndicators[i], descriptions[i])
-                airportList.add(airport)
-            }
-        }
-        return airportList
-    }
 
     /*
     override fun onAttach(context: Context?) {
@@ -76,50 +55,6 @@ class AirportsFragment : BaseFragment() {
     }
 
 
-    class SimpleItemRecyclerViewAdapter(
-        private val airports: List<Airport>
-    ) :
-        RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
-
-        private val onClickListener: View.OnClickListener = View.OnClickListener {
-            Logger.i("Presed an element on the recyclerview")
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.row_layout, parent, false)
-            return ViewHolder(view)
-        }
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val airport = airports[position]
-            holder.name.text = airport.description
-            holder.thumbNail.setImageResource(R.drawable.rounded_button)
-
-            with(holder.thumbNail) {
-                tag = airport // Save the airport represented by this view
-                setOnClickListener(onClickListener)
-            }
-        }
-
-        override fun getItemCount() = airports.size
-
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val name: TextView = view.textView
-            var description: TextView = view.textview_rowlayout_description
-            var thumbNail: ImageView = view.imageview_rowlayout_thumbnail
-        }
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         * @return A new instance of fragment AirportsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance() =
-            AirportsFragment()
-    }
 }
 
 
