@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.personal.frederic.TrainTalk.R
+import com.personal.frederic.TrainTalk.mainActivity
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -75,8 +76,9 @@ class RegisterActivity : AppCompatActivity() {
          selectedPhotoUri = data.data
            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
+            selectphoto_imageview_register.setImageBitmap(bitmap)
+            //button doorzichtig maken zodat je foto ziet
+            selectphoto_button_register.alpha= 0f
 
         }
     }
@@ -100,6 +102,12 @@ class RegisterActivity : AppCompatActivity() {
             Log.d("RegisterActivity", "Succesfullly created user with uid: ${it.result?.user?.uid}")
 
             uploadImageToFirebaseStorage()
+
+            if(it.isSuccessful)  {
+                val intent= Intent(this, mainActivity::class.java)
+                startActivity(intent)
+            }
+
         }
             .addOnFailureListener {
                 Log.d("RegisterActivity", "Failed to create user: ${it.message}")
